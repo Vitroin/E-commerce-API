@@ -3,8 +3,7 @@ import { User } from "../common/user.schema";
 
 @Schema({ timestamps: true, discriminatorKey:"role" ,toJSON: {virtuals: true} })
 export class Seller extends User {
-
-
+    
     @Prop({type: String, required: true})
     whatsappLink!: string;
 }

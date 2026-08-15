@@ -3,8 +3,10 @@ import { Types } from "mongoose";
 import { User } from "../common/user.schema";
 
 @Schema({ timestamps: true, discriminatorKey:"role" ,toJSON: {virtuals: true} })
+export class Customer extends User {
 
-export class Admin extends User {
+    @Prop({ type: Date})
+    dob!: Date;
 }
 
-export const adminSchema = SchemaFactory.createForClass(Admin);
+export const customerSchema = SchemaFactory.createForClass(Customer);
