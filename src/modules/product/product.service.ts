@@ -2,10 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { AdminRepository, CustomerRepository, SellerRepository } from '@models/index';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly configService: ConfigService){}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly sellerRepository: SellerRepository,
+    private readonly adminRepository: AdminRepository,
+    private readonly customerRepository: CustomerRepository,
+  ){}
 
 
   create(createProductDto: CreateProductDto) {
