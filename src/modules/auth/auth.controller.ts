@@ -1,15 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, UseFilters } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { HttpExceptionFilter } from '@common/index';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
+  @Post('/register')
+  @UseFilters(HttpExceptionFilter)
   register(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.register(createAuthDto);
+    let newUser = false;
+    if ( newUser == false) throw new HttpException("Kefee Keda",469,{ cause: 469})
+      return {message: "Welcome"};
+
   }
 
   @Get()
