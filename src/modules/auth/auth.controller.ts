@@ -1,39 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, UseFilters } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { HttpExceptionFilter } from '@common/index';
+import { AuthFactoryService } from './factory';
+import { LoginDTO, RegisterDTO } from './dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly authFactoryService: AuthFactoryService) {}
 
   @Post('/register')
-  @UseFilters(HttpExceptionFilter)
-  register(@Body() createAuthDto: CreateAuthDto) {
-    let newUser = false;
-    if ( newUser == false) throw new HttpException("Kefee Keda",469,{ cause: 469})
-      return {message: "Welcome"};
-
+  async register(@Body() registerDTO: RegisterDTO) {
+    const customer = await this.authFactoryService.createCustomer(registerDTO);
+    const createdCustomer = await this.authService.register(customer);
+    return {
+      message: 'Customer registered successfully',
+      success: true,
+      data: createdCustomer,
+    }
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Post('/login')
+  async login(@Body() loginDTO: LoginDTO){
+    const token = await this.authService.login(loginDTO);
+    return {
+      message: 'logged in successfully',
+      success: true,
+      data: {
+        token
+      }
+    }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
-  }
 }

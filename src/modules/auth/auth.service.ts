@@ -1,28 +1,60 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { AuthFactoryService } from './factory';
 import { CustomerRepository } from '@models/index';
+import { LoginDTO } from './dto';
+import { sendMail } from '@common/helpers';
+import { Customer } from './entities/auth.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  constructor (private readonly customerRepository : CustomerRepository){}
-  register(createAuthDto: CreateAuthDto) {
-    //save 
-  }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  constructor (
+    private readonly configService: ConfigService,
+    private readonly customerRepository : CustomerRepository,
+    private readonly authFactoryService : AuthFactoryService,
+    private readonly jwtService: JwtService
+  ){}
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    async register(customer: Customer) {
+      const customerExist = await this.customerRepository.getOne({ email: customer.email });
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
+      if(customerExist) {
+        throw new ConflictException('User already exists');
+      }
+      const createdCustomer = await this.customerRepository.create(customer);
+
+      await sendMail({
+        to: customer.email,
+        subject: 'Verify your email',
+        text: `Your OTP is ${customer.otp}. It will expire in 5 minutes.`,
+      });
+      const {password, otp, otpExpiry, ...customerObj}  = JSON.parse(JSON.stringify(createdCustomer));
+
+      return customerObj as Customer;
+    } 
+
+    async login(loginDTO: LoginDTO) {
+      const customerExist = await this.customerRepository.getOne({ email: loginDTO.email });
+      const match = await bcrypt.compare(loginDTO.password, customerExist?.password || '?');
+          
+      if (!customerExist) throw new UnauthorizedException('Invalid credentials');
+      if (!match) throw new UnauthorizedException('Invalid credentials');
+      
+      //generate token
+      const token = this.jwtService.sign({
+        _id: customerExist._id,
+        email: customerExist.email,
+        role: 'Customer'
+      },
+      {secret: this.configService.get('access').jwt_secret, expiresIn: '1d'})
+    
+      return token
+    }
+
 }
+
+
