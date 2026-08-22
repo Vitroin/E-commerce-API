@@ -8,3 +8,6 @@ export * from "./admin/admin.schema.js";
 
 export * from "./customer/customer.repository.js";
 export * from "./customer/customer.schema.js";
+
+export * from "./category/category.repository.js";
+export * from "./category/category.schema.js";
