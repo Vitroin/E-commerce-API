@@ -1,11 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
+import { Category, CategoryRepository } from '@models/index';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class CategoryService {
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+  constructor (
+    private readonly categoryRepository: CategoryRepository
+  ){}
+
+  async create( category: Category) {
+    const categoryExist = await this.categoryRepository.getOne({
+      slug: category.slug,
+    });
+
+    if (categoryExist) throw new ConflictException('Category already exists');
+    return await this.categoryRepository.create(category);
   }
 
   findAll() {

@@ -1,15 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { User } from '@common/decorators';
+import { CategoryFactoryService } from './factory';
+import { AuthGuard } from '@common/guards';
 
+@UseGuards(AuthGuard)
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoryService) {}
+  constructor(
+    private readonly categoryService: CategoryService,
+    private readonly categoryFactoryService: CategoryFactoryService      
+  ) {}
 
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoryService.create(createCategoryDto);
+  create(@Body() createCategoryDto: CreateCategoryDto, @User() user:any) {
+    const category = this.categoryFactoryService.createCategory(createCategoryDto, user)
+    const createdCategory = this.categoryService.create(category);
+    return {
+      sucess: true,
+      message: 'Category created successfully',
+      data: createdCategory
+    }
   }
 
   @Get()
