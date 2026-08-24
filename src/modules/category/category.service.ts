@@ -9,6 +9,7 @@ export class CategoryService {
   ){}
 
   async create( category: Category) {
+    
     const categoryExist = await this.categoryRepository.getOne({
       slug: category.slug,
     });

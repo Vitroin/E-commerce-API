@@ -15,13 +15,13 @@ export class CategoryController {
   ) {}
 
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto, @User() user:any) {
+  async create(@Body() createCategoryDto: CreateCategoryDto, @User() user:any) {
     const category = this.categoryFactoryService.createCategory(createCategoryDto, user)
-    const createdCategory = this.categoryService.create(category);
+    const createdCategory = await this.categoryService.create(category);
     return {
       sucess: true,
       message: 'Category created successfully',
-      data: createdCategory
+      data: {createdCategory}
     }
   }
 
