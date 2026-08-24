@@ -26,7 +26,8 @@ import { CustomerModule } from './modules/customer/customer.module';
     AuthModule, 
     ProductModule, 
     BrandModule, 
-    CategoryModule, CustomerModule,
+    CategoryModule, 
+    CustomerModule,
     ],
 
   controllers: [AppController],

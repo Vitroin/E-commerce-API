@@ -1,5 +1,5 @@
 import { sendMail } from '@common/helpers';
-import { CustomerRepository } from '@models/index';
+import { CustomerRepository, UserRepository } from '@models/index';
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -13,7 +13,8 @@ export class AuthService {
   constructor (
     private readonly configService: ConfigService,
     private readonly customerRepository : CustomerRepository,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly userRepository: UserRepository
   ){}
 
     async register(customer: Customer) {
@@ -36,17 +37,17 @@ export class AuthService {
     } 
 
     async login(loginDTO: LoginDTO) {
-      const customerExist = await this.customerRepository.getOne({ email: loginDTO.email });
-      const match = await bcrypt.compare(loginDTO.password, customerExist?.password || '?');
+      const userExist = await this.userRepository.getOne({ email: loginDTO.email });
+      const match = await bcrypt.compare(loginDTO.password, userExist?.password || '?');
           
-      if (!customerExist) throw new UnauthorizedException('Invalid credentials');
+      if (!userExist) throw new UnauthorizedException('Invalid credentials');
       if (!match) throw new UnauthorizedException('Invalid credentials');
       
       //generate token
       const token = this.jwtService.sign({
-        _id: customerExist._id,
-        email: customerExist.email,
-        role: 'Customer'
+        _id: userExist._id,
+        email: userExist.email,
+        role: 'user'
       },
       {secret: this.configService.get('access').jwt_secret, expiresIn: '1d'})
     

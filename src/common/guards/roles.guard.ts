@@ -14,7 +14,6 @@ export class RolesGuard implements CanActivate {
       context.getHandler(),
     ]);
     const publicVal = this.reflector.get(PUBLIC, context.getHandler());
-    console.log('roles', roles)
     
     if(publicVal) return true;
     if (!roles.includes(request.user.role)) throw new UnauthorizedException('You do not have permission to access this resource')
