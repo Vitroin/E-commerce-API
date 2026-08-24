@@ -1,12 +1,11 @@
+import { sendMail } from '@common/helpers';
+import { CustomerRepository } from '@models/index';
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { AuthFactoryService } from './factory';
-import { CustomerRepository } from '@models/index';
 import { LoginDTO } from './dto';
-import { sendMail } from '@common/helpers';
 import { Customer } from './entities/auth.entity';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +13,6 @@ export class AuthService {
   constructor (
     private readonly configService: ConfigService,
     private readonly customerRepository : CustomerRepository,
-    private readonly authFactoryService : AuthFactoryService,
     private readonly jwtService: JwtService
   ){}
 
