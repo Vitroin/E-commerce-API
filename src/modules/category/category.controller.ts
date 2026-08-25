@@ -1,9 +1,9 @@
-import { Auth, User } from '@common/decorators';
+import { Auth, Public, User } from '@common/decorators';
 import { CategoryFactoryService } from './factory';
 import { CategoryService } from './category.service';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 
 @Controller('category')
 @Auth(['Admin'])
@@ -35,16 +35,23 @@ export class CategoryController {
     }
   }
 
-
-  @Get()
-  findAll() {
-    return this.categoryService.findAll();
-  }
-
+  @Public()
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.categoryService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const category = await this.categoryService.findOne(id);
+    return {
+      sucess: true,
+      message: 'Category found successfully',
+      data: {category}
+    }
   }
+
+  //Todo
+  // @Get()
+  // findAll(@Query() query: any) {
+  //   this.categoryService.findAll(query);
+  // }
+
 
 
   @Delete(':id')

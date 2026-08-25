@@ -31,6 +31,21 @@ export class AbstractRepository<T> {
     return this.model.findOne(filter, projection, options);
   }
 
+  public async getAll(
+    filter: QueryFilter<T>,
+    projection: ProjectionType<T> = {},
+    options: QueryOptions<T> = {},
+    query: any
+  ) {
+    let limit = query.limit;
+    let skip = query.page* (limit -1)
+    options.limit = limit;
+    options.skip = skip;
+
+
+    return this.model.find(filter, projection, options);
+  }
+
   public async updateOne(
     filter: QueryFilter<T>,
     updateQuery: UpdateQuery<T> = {},
