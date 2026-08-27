@@ -33,12 +33,15 @@ export class CategoryService {
   }
   
 
-  //Todo
-  // findAll(query: any) {
-  //   this.categoryRepository.getAll(
-  //     {},{}, query
-  //   )
-  // }
+  // Todo
+  async findAll(query: any) {
+    return await this.categoryRepository.getAll(
+      {},
+      {},
+      { populate: [{ path: 'createdBy' }, { path: 'updatedBy' }] },
+      query
+    );
+  }
 
 
 

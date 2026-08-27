@@ -18,7 +18,7 @@ export class CategoryController {
     const category = this.categoryFactoryService.createCategory(createCategoryDto, user)
     const createdCategory = await this.categoryService.create(category);
     return {
-      sucess: true,
+      success: true,
       message: 'Category created successfully',
       data: {createdCategory}
     }
@@ -29,7 +29,7 @@ export class CategoryController {
     const category = await this.categoryFactoryService.UpdateCategory(id, updateCategoryDto, user)
     const updatedCategory = await this.categoryService.update(id, category);
     return {
-      sucess: true,
+      success: true,
       message: 'Category updated successfully',
       data: {updatedCategory}
     }
@@ -40,19 +40,22 @@ export class CategoryController {
   async findOne(@Param('id') id: string) {
     const category = await this.categoryService.findOne(id);
     return {
-      sucess: true,
+      success: true,
       message: 'Category found successfully',
       data: {category}
     }
   }
 
-  //Todo
-  // @Get()
-  // findAll(@Query() query: any) {
-  //   this.categoryService.findAll(query);
-  // }
-
-
+  // Todo
+  @Get()
+  async findAll(@Query() query: any) {
+    const categories = await this.categoryService.findAll(query);
+    return {
+      success: true,
+      message: 'Categories retrieved successfully',
+      data: categories
+    };
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

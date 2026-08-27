@@ -35,17 +35,17 @@ export class AbstractRepository<T> {
     filter: QueryFilter<T>,
     projection: ProjectionType<T> = {},
     options: QueryOptions<T> = {},
-    query: any
+    query: { page?: number; limit?: number } = {}
   ) {
-    let limit = query.limit;
-    let skip = query.page* (limit -1)
+    const limit = Math.max(1, Number(query.limit) || 10);
+    const page = Math.max(1, Number(query.page) || 1);
+    const skip = (page - 1) * limit;
+
     options.limit = limit;
     options.skip = skip;
 
-
     return this.model.find(filter, projection, options);
   }
-
   public async updateOne(
     filter: QueryFilter<T>,
     updateQuery: UpdateQuery<T> = {},
