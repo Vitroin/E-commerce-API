@@ -44,6 +44,7 @@ export class CategoryService {
   }
 
 
+  //Todo: Category Implement remove methods
 
   remove(id: number) {
     return `This action removes a #${id} category`;

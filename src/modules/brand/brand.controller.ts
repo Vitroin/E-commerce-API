@@ -14,8 +14,14 @@ export class BrandController {
   ) {}
 
   @Post()
-  create(@Body() createBrandDto: CreateBrandDto, @User() user: any ) {
+  async create(@Body() createBrandDto: CreateBrandDto, @User() user: any ) {
     const brand = this.brandFactoryService.createBrand(createBrandDto, user);
+    const createdBrand = await this.brandService.create(brand);
+    return {
+      success: true,
+      message: 'Brand created successfully',
+      data: createdBrand
+    }
     
   }
 
