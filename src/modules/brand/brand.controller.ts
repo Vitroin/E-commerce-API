@@ -3,7 +3,8 @@ import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { BrandFactoryService } from './factory/brand.factory';
-import { Auth, User } from '@common/decorators';
+import { Auth, Public, User } from '@common/decorators';
+import { MESSAGE } from '@common/constant';
 
 @Controller('brand')
 @Auth(['Admin'])
@@ -30,11 +31,17 @@ export class BrandController {
     return this.brandService.findAll();
   }
 
+  @Public()
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.brandService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const brand = await this.brandService.findOne(id);
+    return {
+      success: true,
+      message: MESSAGE.Brand.Found,
+      data: {brand}
+    }
   }
-
+  
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
     return this.brandService.update(+id, updateBrandDto);

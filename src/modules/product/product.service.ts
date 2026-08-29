@@ -1,8 +1,9 @@
 import { Product, ProductRepository } from '@models/index';
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CategoryService } from '@modules/category/category.service';
 import { BrandService } from '@modules/brand/brand.service';
+import { MESSAGE } from '@common/constant';
 
 @Injectable()
 export class ProductService {
@@ -14,8 +15,14 @@ export class ProductService {
 
 
   async create(product: Product) {
-    await this.brandService.findOne(product.brandId.toString());
-    await this.categoryService.findOne(product.categoryId.toString()); 
+    const [productExist] = await Promise.all([
+      this.productRepository.getOne({ slug: product.slug }),
+      this.brandService.findOne(product.brandId.toString()),
+      this.categoryService.findOne(product.categoryId.toString()),
+    ]);
+
+    if (productExist) throw new ConflictException(MESSAGE.Product.alreadyExists);
+
     return await this.productRepository.create(product);
   }
 

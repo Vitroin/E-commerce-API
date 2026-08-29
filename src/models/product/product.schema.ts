@@ -41,7 +41,7 @@ export class Product {
     price!: number;
 
 
-    @Prop({ type: Number, default: 0 ,min: 1 }) // negative
+    @Prop({ type: Number, default: 0 ,min: 0 }) // negative
     discountAmount?: number; // >> 20 fixedAmount - percentage >> 14000 - 50% = 7000
 
 

@@ -4,7 +4,7 @@ import { ConflictException, Injectable, NotFoundException } from '@nestjs/common
 @Injectable()
 export class CategoryService {
   constructor (
-    private readonly categoryRepository: CategoryRepository
+    private readonly  categoryRepository: CategoryRepository
   ){}
 
   async create(category: Category) {

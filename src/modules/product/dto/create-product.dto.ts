@@ -1,5 +1,5 @@
 import { DiscountType } from "@models/index";
-import { IsArray, IsEnum, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from "class-validator";
+import { IsArray, IsEnum, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString, Min, MinLength } from "class-validator";
 import { Types } from "mongoose";
 
 export class CreateProductDto {
@@ -27,6 +27,7 @@ export class CreateProductDto {
 
             @IsNumber()
             @IsOptional()
+            @Min(1)
             discountAmount?: number;
 
             @IsString()
