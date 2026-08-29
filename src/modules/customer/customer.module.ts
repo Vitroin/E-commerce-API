@@ -7,6 +7,6 @@ import { UserMongoModule } from '@shared/index';
 @Module({
   imports: [UserMongoModule],
   controllers: [CustomerController],
-  providers: [CustomerService, JwtService],
+  providers: [CustomerService],
 })
 export class CustomerModule {}

@@ -9,6 +9,7 @@ import { BrandModule } from './modules/brand/brand.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
 import { CustomerModule } from './modules/customer/customer.module';
+import { CommonModule } from '@shared/modules';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { CustomerModule } from './modules/customer/customer.module';
         uri: configService.get('db').url,
       }),
     }),
+    CommonModule,
     AuthModule, 
     ProductModule, 
     BrandModule, 

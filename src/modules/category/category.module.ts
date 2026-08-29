@@ -17,7 +17,6 @@ import { UserMongoModule } from '@shared/index';
     CategoryService, 
     CategoryRepository,
     CategoryFactoryService, 
-    JwtService
   ],
 })
 export class CategoryModule {}

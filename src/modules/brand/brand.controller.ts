@@ -2,14 +2,21 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
+import { BrandFactoryService } from './factory/brand.factory';
+import { Auth, User } from '@common/decorators';
 
 @Controller('brand')
+@Auth(['Admin'])
 export class BrandController {
-  constructor(private readonly brandService: BrandService) {}
+  constructor(
+    private readonly brandService: BrandService,
+    private readonly brandFactoryService: BrandFactoryService
+  ) {}
 
   @Post()
-  create(@Body() createBrandDto: CreateBrandDto) {
-    return this.brandService.create(createBrandDto);
+  create(@Body() createBrandDto: CreateBrandDto, @User() user: any ) {
+    const brand = this.brandFactoryService.createBrand(createBrandDto, user);
+    
   }
 
   @Get()
