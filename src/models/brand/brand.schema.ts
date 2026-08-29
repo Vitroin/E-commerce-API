@@ -17,4 +17,4 @@ export class Brand{
     logo?: Object;
 }
 
-export const BrandSchema = SchemaFactory.createForClass(Brand)
+export const brandSchema = SchemaFactory.createForClass(Brand)

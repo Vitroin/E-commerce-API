@@ -17,4 +17,4 @@ export class Category{
     logo?: Object;
 }
 
-export const CategorySchema = SchemaFactory.createForClass(Category)
+export const categorySchema = SchemaFactory.createForClass(Category)
