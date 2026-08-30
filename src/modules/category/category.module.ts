@@ -7,20 +7,14 @@ import { CategoryService } from './category.service';
 import { CategoryFactoryService } from './factory';
 
 @Module({
-  imports:[
+  imports: [
     UserMongoModule,
-    MongooseModule.forFeature([{ name: Category.name, schema: categorySchema }])
+    MongooseModule.forFeature([
+      { name: Category.name, schema: categorySchema },
+    ]),
   ],
   controllers: [CategoryController],
-  providers: [
-    CategoryService, 
-    CategoryRepository,
-    CategoryFactoryService, 
-  ],
-  exports: [
-    CategoryService, 
-    CategoryRepository,
-    CategoryFactoryService, 
-  ],
+  providers: [CategoryService, CategoryRepository, CategoryFactoryService],
+  exports: [CategoryService, CategoryRepository, CategoryFactoryService],
 })
 export class CategoryModule {}

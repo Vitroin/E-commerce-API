@@ -29,14 +29,15 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
-      "prettier/prettier": ["error", { endOfLine: "auto" }],
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
     },
     // @ts-ignore
-    "prettier/prettier":[
-      "error",{
-          "singleQuote": true,
-          "parser": "flow"
-      }
-    ]
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        parser: 'flow',
+      },
+    ],
   },
 );

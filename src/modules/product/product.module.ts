@@ -10,17 +10,12 @@ import { ProductService } from './product.service';
 
 @Module({
   imports: [
-    UserMongoModule, MongooseModule.forFeature([
-      { name: 'Product', schema: productSchema }, 
-    ]),
-    CategoryModule, 
+    UserMongoModule,
+    MongooseModule.forFeature([{ name: 'Product', schema: productSchema }]),
+    CategoryModule,
     BrandModule,
   ],
   controllers: [ProductController],
-  providers: [
-    ProductService,
-    ProductFactoryService,
-    ProductRepository
-  ],
+  providers: [ProductService, ProductFactoryService, ProductRepository],
 })
 export class ProductModule {}

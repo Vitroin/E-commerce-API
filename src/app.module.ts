@@ -11,7 +11,6 @@ import { ProductModule } from './modules/product/product.module';
 import { CustomerModule } from './modules/customer/customer.module';
 import { CommonModule } from '@shared/modules';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,17 +19,17 @@ import { CommonModule } from '@shared/modules';
     }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService)=>({
+      useFactory: (configService: ConfigService) => ({
         uri: configService.get('db').url,
       }),
     }),
     CommonModule,
-    AuthModule, 
-    ProductModule, 
-    BrandModule, 
-    CategoryModule, 
+    AuthModule,
+    ProductModule,
+    BrandModule,
+    CategoryModule,
     CustomerModule,
-    ],
+  ],
 
   controllers: [AppController],
   providers: [AppService],

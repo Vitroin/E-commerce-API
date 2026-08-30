@@ -7,7 +7,8 @@ import { LoginDTO, RegisterDTO } from './dto';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly authFactoryService: AuthFactoryService) {}
+    private readonly authFactoryService: AuthFactoryService,
+  ) {}
 
   @Post('/register')
   async register(@Body() registerDTO: RegisterDTO) {
@@ -17,19 +18,18 @@ export class AuthController {
       message: 'Customer registered successfully',
       success: true,
       data: createdCustomer,
-    }
+    };
   }
 
   @Post('/login')
-  async login(@Body() loginDTO: LoginDTO){
+  async login(@Body() loginDTO: LoginDTO) {
     const token = await this.authService.login(loginDTO);
     return {
       message: 'logged in successfully',
       success: true,
       data: {
-        token
-      }
-    }
+        token,
+      },
+    };
   }
-
 }

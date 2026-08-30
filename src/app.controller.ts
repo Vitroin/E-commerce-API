@@ -1,8 +1,11 @@
-import { Controller, Post, Req, Res,Body, HttpException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Req,
+  Res,
+  Body,
+  HttpException,
+} from '@nestjs/common';
 
-@Controller("")
-export class AppController {
-
-
-  
-}
+@Controller('')
+export class AppController {}

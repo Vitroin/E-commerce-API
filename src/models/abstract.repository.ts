@@ -35,7 +35,7 @@ export class AbstractRepository<T> {
     filter: QueryFilter<T>,
     projection: ProjectionType<T> = {},
     options: QueryOptions<T> = {},
-    query: { page?: number; limit?: number } = {}
+    query: { page?: number; limit?: number } = {},
   ) {
     const limit = Math.max(1, Number(query.limit) || 10);
     const page = Math.max(1, Number(query.page) || 1);
@@ -47,7 +47,6 @@ export class AbstractRepository<T> {
     return this.model.find(filter, projection, options);
   }
 
-  
   public async updateOne(
     filter: QueryFilter<T>,
     updateQuery: UpdateQuery<T> = {},
@@ -55,5 +54,4 @@ export class AbstractRepository<T> {
   ) {
     return this.model.findOneAndUpdate(filter, updateQuery, options);
   }
-
 }

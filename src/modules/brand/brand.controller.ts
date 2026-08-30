@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
@@ -11,19 +19,18 @@ import { MESSAGE } from '@common/constant';
 export class BrandController {
   constructor(
     private readonly brandService: BrandService,
-    private readonly brandFactoryService: BrandFactoryService
+    private readonly brandFactoryService: BrandFactoryService,
   ) {}
 
   @Post()
-  async create(@Body() createBrandDto: CreateBrandDto, @User() user: any ) {
+  async create(@Body() createBrandDto: CreateBrandDto, @User() user: any) {
     const brand = this.brandFactoryService.createBrand(createBrandDto, user);
     const createdBrand = await this.brandService.create(brand);
     return {
       success: true,
       message: 'Brand created successfully',
-      data: createdBrand
-    }
-    
+      data: createdBrand,
+    };
   }
 
   @Get()
@@ -38,10 +45,10 @@ export class BrandController {
     return {
       success: true,
       message: MESSAGE.Brand.Found,
-      data: {brand}
-    }
+      data: { brand },
+    };
   }
-  
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
     return this.brandService.update(+id, updateBrandDto);

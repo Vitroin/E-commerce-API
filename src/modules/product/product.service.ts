@@ -2,16 +2,19 @@ import { MESSAGE } from '@common/constant';
 import { Product, ProductRepository } from '@models/index';
 import { BrandService } from '@modules/brand/brand.service';
 import { CategoryService } from '@modules/category/category.service';
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 @Injectable()
 export class ProductService {
   constructor(
     private readonly productRepository: ProductRepository,
     private readonly categoryService: CategoryService,
-    private readonly brandService: BrandService
-  ){}
-
+    private readonly brandService: BrandService,
+  ) {}
 
   async create(product: Product, user: any) {
     const [existingProduct] = await Promise.all([
@@ -48,7 +51,6 @@ export class ProductService {
   async update(id: string, product: Product) {
     const productExist = await this.findOne(id);
 
-
     // if (product.stock !== undefined) {
     //   product.stock = (productExist.stock ?? 0) + product.stock;
     // }
@@ -69,7 +71,9 @@ export class ProductService {
     //   product.size = Array.from(sizes);
     // }
 
-    return this.productRepository.updateOne({ _id: id }, product, { new: true });
+    return this.productRepository.updateOne({ _id: id }, product, {
+      new: true,
+    });
   }
 
   remove(id: number) {

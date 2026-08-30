@@ -6,7 +6,9 @@ import { Product } from './product.schema';
 
 @Injectable()
 export class ProductRepository extends AbstractRepository<Product> {
-    constructor(@InjectModel(Product.name) private readonly productModel: Model<Product>){
-        super(productModel);
-    }
+  constructor(
+    @InjectModel(Product.name) private readonly productModel: Model<Product>,
+  ) {
+    super(productModel);
+  }
 }

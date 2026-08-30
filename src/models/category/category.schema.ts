@@ -1,20 +1,20 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { SchemaType, SchemaTypes, Types } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { SchemaType, SchemaTypes, Types } from 'mongoose';
 
 @Schema({ timestamps: true })
-export class Category{
-    readonly _id!: Types.ObjectId;
+export class Category {
+  readonly _id!: Types.ObjectId;
 
-    @Prop({ type:String, trim: true,required: true, unique: true })
-    name!: string;
-    @Prop({ type:String, trim: true,required: true, unique: true })
-    slug!: string;
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true })
-    createdBy!: mongoose.Types.ObjectId;
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true })
-    updatedBy!: mongoose.Types.ObjectId;
-    //todo
-    logo?: Object;
+  @Prop({ type: String, trim: true, required: true, unique: true })
+  name!: string;
+  @Prop({ type: String, trim: true, required: true, unique: true })
+  slug!: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true })
+  createdBy!: mongoose.Types.ObjectId;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true })
+  updatedBy!: mongoose.Types.ObjectId;
+  //todo
+  logo?: Object;
 }
 
-export const categorySchema = SchemaFactory.createForClass(Category)
+export const categorySchema = SchemaFactory.createForClass(Category);

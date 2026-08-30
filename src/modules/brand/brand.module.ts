@@ -9,13 +9,10 @@ import { UserMongoModule } from '@shared/index';
 @Module({
   imports: [
     UserMongoModule,
-    MongooseModule.forFeature([{ name: Brand.name, schema: brandSchema }])],
+    MongooseModule.forFeature([{ name: Brand.name, schema: brandSchema }]),
+  ],
   controllers: [BrandController],
-  providers: [BrandService,
-              BrandFactoryService, 
-              BrandRepository],
-  exports: [BrandService,
-              BrandFactoryService, 
-              BrandRepository],
+  providers: [BrandService, BrandFactoryService, BrandRepository],
+  exports: [BrandService, BrandFactoryService, BrandRepository],
 })
 export class BrandModule {}

@@ -1,5 +1,3 @@
-import { User } from "@models/index";
+import { User } from '@models/index';
 
-export class Customer extends User {
-
-}
+export class Customer extends User {}

@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards,Request  } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { AuthGuard, RolesGuard } from '@common/guards';
 import { Roles } from '@common/decorators';
@@ -11,13 +11,13 @@ export class CustomerController {
   @Get()
   @Roles(['Customer'])
   @UseGuards(RolesGuard)
-  getProfile(@Request() req:any){
+  getProfile(@Request() req: any) {
     return {
       message: 'Customer profile retrieved successfully',
       success: true,
-      data:{
-        user: req.user
-      }
-    }
+      data: {
+        user: req.user,
+      },
+    };
   }
-} 
+}

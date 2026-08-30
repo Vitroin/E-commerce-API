@@ -26,7 +26,7 @@
       "@modules/*": ["src/modules/*"],
       "@shared/*": ["src/shared/*"],
       "@config/*": ["src/config/*"],
-      "@common/*": ["src/common/*"],
+      "@common/*": ["src/common/*"]
     }
   }
 }
