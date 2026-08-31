@@ -1,10 +1,10 @@
-import { Types } from 'mongoose';
+import { SchemaType, SchemaTypes, Types } from 'mongoose';
 import { DiscountType } from '@common/types';
 import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class UserCoupon {
-    @Prop({ type: Types.ObjectId, ref: 'Customer', required: true })
+    @Prop({ type: SchemaTypes.ObjectId, ref: 'User', required: true })
     customerId!: Types.ObjectId;
 
     @Prop({ type: Number, required: true, default: 0 })
@@ -28,10 +28,10 @@ export class Coupon {
     @Prop({ type: Date, required: true })
     toDate!: Date;
 
-    @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+    @Prop({ type: SchemaTypes.ObjectId, ref: 'User', required: true })
     createdBy!: Types.ObjectId;
 
-    @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+    @Prop({ type: SchemaTypes.ObjectId, ref: 'User', required: true })
     updatedBy!: Types.ObjectId;
 
     @Prop({ type: Boolean, default: true })

@@ -16,4 +16,5 @@ export const MESSAGE = {
   Product: { ...generateMessage('Product') },
   User: { ...generateMessage('User') },
   Customer: { ...generateMessage('Customer') },
+  Coupon: { ...generateMessage('Coupon') },
 };
