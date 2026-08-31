@@ -37,7 +37,7 @@ export class Coupon {
     @Prop({ type: Boolean, default: true })
     active!: boolean;
 
-    @Prop({ type: [UserCoupon], default: [] })
+    @Prop({ type: [UserCoupon] })
     usedBy?: UserCoupon[];
 
     @Prop({ type: [UserCoupon] })
