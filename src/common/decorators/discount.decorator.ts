@@ -6,6 +6,7 @@ import {
   ValidationArguments,
 } from 'class-validator';
 
+//todo
 export function IsValidDiscount(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
