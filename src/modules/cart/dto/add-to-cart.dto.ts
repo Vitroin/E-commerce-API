@@ -6,6 +6,6 @@ export class AddToCartDto {
     productId!: string;
 
     @IsInt()
-    @Min(1)
+    @Min(0)
     quantity!: number;
 }
