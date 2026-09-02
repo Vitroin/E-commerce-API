@@ -3,11 +3,13 @@ import { SchemaTypes, Types } from 'mongoose';
 import { PaymentMethod, OrderStatus } from '@common/types';
 
 @Schema()
-export class CouponDetails {
+export class CouponDetail {
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Coupon', required: true })
   couponId!: Types.ObjectId
   @Prop({ type: Number, required: true })
   discount!: number;
+  @Prop({ type: String, required: true })
+  code!: string;
 }
 
 @Schema()
@@ -69,8 +71,8 @@ export class Order {
     } })
     status?: OrderStatus;
 
-    @Prop({ type: CouponDetails })
-    coupon?: CouponDetails;
+    @Prop({ type: CouponDetail })
+    coupon?: CouponDetail;
 
     @Prop({ type: Number, required: true })
     totalAmount!: number;
