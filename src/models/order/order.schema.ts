@@ -27,7 +27,7 @@ export class OrderProduct {
     discount!: number;
 
     @Prop({ type: Number, required: true })
-    totalPrice!: number;
+    totalAmount!: number;
 }
 
 @Schema()
@@ -72,7 +72,7 @@ export class Order {
     status?: OrderStatus;
 
     @Prop({ type: CouponDetail })
-    coupon?: CouponDetail;
+    couponDetails?: CouponDetail;
 
     @Prop({ type: Number, required: true })
     totalAmount!: number;

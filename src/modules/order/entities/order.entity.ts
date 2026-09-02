@@ -12,7 +12,7 @@ export class OrderProduct {
     quantity!: number;
     price!: number;
     discount!: number;
-    totalPrice!: number;
+    totalAmount!: number;
 }
 
 export class Address {

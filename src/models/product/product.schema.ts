@@ -52,10 +52,10 @@ export class Product {
       return this.price - (this.price * (this.discountAmount || 0)) / 100;
     },
   })
-  finalPrice?: number; // virtual field
+  finalPrice!: number; // virtual field
 
   @Prop({ type: Number, default: 1, min: 0 })
-  stock?: number;
+  stock!: number;
 
   @Prop({ type: Number, min: 0 })
   sold?: number;

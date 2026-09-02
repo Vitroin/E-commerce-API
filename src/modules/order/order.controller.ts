@@ -1,34 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { OrderService } from './order.service';
+import { Auth, User } from '@common/decorators';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { OrderService } from './order.service';
 
 @Controller('order')
+@Auth(['Admin', 'Customer'])
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
-  }
+  async create(@Body() createOrderDto: CreateOrderDto, @User() user: any) {
+    const result = await this.orderService.create(createOrderDto, user);
 
-  @Get()
-  findAll() {
-    return this.orderService.findAll();
-  }
+    if (!result.success) {
+      return {
+        success: false,
+        message: 'Some products failed to create order',
+        data: result.failedProducts,
+      };
+    }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderService.remove(+id);
+    return {
+      success: true,
+      message: 'Order created successfully',
+      data: result.order,
+    };
   }
 }

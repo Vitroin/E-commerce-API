@@ -14,5 +14,6 @@ import { UserMongoModule } from '@shared/modules';
   ],
   controllers: [CartController],
   providers: [CartService, CartRepository],
+  exports: [CartService]
 })
 export class CartModule {}

@@ -1,6 +1,7 @@
 import { PaymentMethod } from '@common/types';
 import { Type } from 'class-transformer';
 import { IsEnum, IsMongoId, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { Types } from 'mongoose';
 
 class AddressDto {
     @IsString()
@@ -22,7 +23,7 @@ class AddressDto {
 
 class CouponDetail {
     @IsMongoId()
-    couponId!: string;
+    couponId!: Types.ObjectId;
 
     @IsNumber()
     discount!: number;
