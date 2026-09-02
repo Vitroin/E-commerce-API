@@ -4,7 +4,9 @@ import { SchemaTypes, Types } from 'mongoose';
 
 @Schema({ timestamps: true, _id: false })
 export class ProductCart{
+    @Prop({ type: SchemaTypes.ObjectId, ref: 'product' })
     productId!: Types.ObjectId;
+    @Prop({ default: 1, })
     quantity!: number;
 }
 

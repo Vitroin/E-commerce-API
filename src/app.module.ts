@@ -11,6 +11,7 @@ import { ProductModule } from './modules/product/product.module';
 import { CustomerModule } from './modules/customer/customer.module';
 import { CommonModule } from '@shared/modules';
 import { CouponModule } from './modules/coupon/coupon.module';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { CouponModule } from './modules/coupon/coupon.module';
     CategoryModule,
     CustomerModule,
     CouponModule,
+    CartModule,
   ],
 
   controllers: [AppController],
