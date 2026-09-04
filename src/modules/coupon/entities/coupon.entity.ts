@@ -1,27 +1,27 @@
-import { DiscountType } from "@common/types";
-import { UserCoupon } from "@models/index";
-import { Types } from "mongoose";
+import { DiscountType } from '@common/types';
+import { UserCoupon } from '@models/index';
+import { Types } from 'mongoose';
 
 export class Coupon {
-    readonly _id!: Types.ObjectId;
-    
-    code!: string;
+  readonly _id!: Types.ObjectId;
 
-    discountAmount!: number;
+  code!: string;
 
-    discountType?: DiscountType;
+  discountAmount!: number;
 
-    fromDate!: Date;
+  discountType?: DiscountType;
 
-    toDate!: Date;
+  fromDate!: Date;
 
-    createdBy!: Types.ObjectId;
+  toDate!: Date;
 
-    updatedBy!: Types.ObjectId;
+  createdBy!: Types.ObjectId;
 
-    active!: boolean;
+  updatedBy!: Types.ObjectId;
 
-    usedBy?: UserCoupon[];
+  active!: boolean;
 
-    assignedTo?: UserCoupon[];
+  usedBy?: UserCoupon[];
+
+  assignedTo?: UserCoupon[];
 }

@@ -1,38 +1,47 @@
-import { IsValidToDate } from "@common/decorators";
-import { IsValidDiscount } from "@common/decorators/discount.decorator";
-import { DiscountType } from "@common/types";
-import { Transform } from "class-transformer";
-import { IsArray, IsBoolean, IsDate, IsEnum, IsMongoId, IsNotEmpty, IsString, Length, MinDate } from "class-validator";
-import { Types } from "mongoose";
+import { IsValidToDate } from '@common/decorators';
+import { IsValidDiscount } from '@common/decorators/discount.decorator';
+import { DiscountType } from '@common/types';
+import { Transform } from 'class-transformer';
+import {
+  IsArray,
+  IsBoolean,
+  IsDate,
+  IsEnum,
+  IsMongoId,
+  IsNotEmpty,
+  IsString,
+  Length,
+  MinDate,
+} from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateCouponDto {
-        @IsString()
-        @IsNotEmpty()
-        @Length(5,5)
-        code!: string;
-        
-        @IsValidDiscount()
-        discountAmount!: number;
+  @IsString()
+  @IsNotEmpty()
+  @Length(5, 5)
+  code!: string;
 
-        @IsString()
-        @IsEnum(DiscountType)
-        discountType?: DiscountType;
+  @IsValidDiscount()
+  discountAmount!: number;
 
-        @Transform(({ value }) => new Date(value))
-        @IsDate()
-        @MinDate(new Date(Date.now() ))
-        fromDate!: Date;
+  @IsString()
+  @IsEnum(DiscountType)
+  discountType?: DiscountType;
 
-        @Transform(({ value }) => new Date(value))
-        @IsDate()
-        @IsValidToDate()
-        toDate!: Date;
+  @Transform(({ value }) => new Date(value))
+  @IsDate()
+  @MinDate(new Date(Date.now()))
+  fromDate!: Date;
 
-        @IsBoolean()
-        active!: boolean;
+  @Transform(({ value }) => new Date(value))
+  @IsDate()
+  @IsValidToDate()
+  toDate!: Date;
 
-        @IsArray()
-        @IsMongoId({ each: true })
-        assignedTo?: Types.ObjectId[];
+  @IsBoolean()
+  active!: boolean;
+
+  @IsArray()
+  @IsMongoId({ each: true })
+  assignedTo?: Types.ObjectId[];
 }
-

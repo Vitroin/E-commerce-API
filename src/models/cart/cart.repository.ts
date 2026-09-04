@@ -6,9 +6,7 @@ import { Cart } from './cart.schema';
 
 @Injectable() //services - repos - factories - helpers
 export class CartRepository extends AbstractRepository<Cart> {
-  constructor(
-    @InjectModel(Cart.name) private readonly cartModel: Model<Cart>,
-  ) {
+  constructor(@InjectModel(Cart.name) private readonly cartModel: Model<Cart>) {
     super(cartModel);
   }
 }

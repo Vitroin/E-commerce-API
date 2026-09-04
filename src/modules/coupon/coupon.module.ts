@@ -7,7 +7,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CouponRepository, CouponSchema } from '@models/index';
 
 @Module({
-  imports: [ UserMongoModule, MongooseModule.forFeature([{ name: 'Coupon', schema: CouponSchema }]) ],
+  imports: [
+    UserMongoModule,
+    MongooseModule.forFeature([{ name: 'Coupon', schema: CouponSchema }]),
+  ],
   controllers: [CouponController],
   providers: [CouponService, CouponFactoryService, CouponRepository],
 })

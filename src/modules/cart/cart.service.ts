@@ -15,7 +15,12 @@ export class CartService {
   async createCart(dto: AddToCartDto, user: any) {
     return await this.cartRepository.create({
       userId: user._id,
-      products: [{ productId: new Types.ObjectId(dto.productId), quantity: dto.quantity }],
+      products: [
+        {
+          productId: new Types.ObjectId(dto.productId),
+          quantity: dto.quantity,
+        },
+      ],
     });
   }
 
@@ -23,7 +28,6 @@ export class CartService {
     await this.productService.findOne(dto.productId);
     const productId = new Types.ObjectId(dto.productId);
     const cart = await this.cartRepository.getOne({ userId: user._id });
-
 
     if (!cart) {
       return await this.createCart(dto, user);
@@ -36,7 +40,8 @@ export class CartService {
     if (index === -1) {
       cart.products!.push({ productId, quantity: dto.quantity });
     } else {
-       if(dto.quantity == 0 ) return await this.removeFromCart(dto.productId, user); // remove product if quantity is 0
+      if (dto.quantity == 0)
+        return await this.removeFromCart(dto.productId, user); // remove product if quantity is 0
       cart.products![index].quantity += dto.quantity; // increment, not overwrite
     }
 
@@ -46,25 +51,25 @@ export class CartService {
 
   async removeFromCart(productId: string, user: any) {
     const product = await this.cartRepository.updateOne(
-      { userId: user._id, "products.productId": new Types.ObjectId(productId) },
+      { userId: user._id, 'products.productId': new Types.ObjectId(productId) },
       { $pull: { products: { productId: new Types.ObjectId(productId) } } },
       { new: true }, // return the document *after* the update, not before
     );
 
     if (!product) throw new NotFoundException(MESSAGE.Product.notFound);
 
-    return true
+    return true;
   }
 
-  async clearCart( user:any){
+  async clearCart(user: any) {
     return await this.cartRepository.updateOne(
       { userId: user._id },
       { $set: { products: [] } },
-      { new: true }
-    )
+      { new: true },
+    );
   }
 
-  async findOne(user: any){
+  async findOne(user: any) {
     const cart = await this.cartRepository.getOne({ userId: user._id });
     if (!cart) throw new NotFoundException(MESSAGE.Cart.notFound);
     return cart;
@@ -84,5 +89,4 @@ export class CartService {
   //   if (!cart) throw new NotFoundException(MESSAGE.Product.notFound);
   //   return cart;
   // }
-
 }

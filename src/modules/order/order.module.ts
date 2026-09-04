@@ -9,9 +9,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    CartModule, 
-    ProductModule,UserMongoModule ,   
-    MongooseModule.forFeature([{ name: Order.name, schema: orderSchema }])],
+    CartModule,
+    ProductModule,
+    UserMongoModule,
+    MongooseModule.forFeature([{ name: Order.name, schema: orderSchema }]),
+  ],
   controllers: [OrderController],
   providers: [OrderService, OrderRepository],
 })

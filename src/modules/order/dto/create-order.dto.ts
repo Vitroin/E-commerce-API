@@ -1,53 +1,60 @@
 import { PaymentMethod } from '@common/types';
 import { Type } from 'class-transformer';
-import { IsEnum, IsMongoId, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+import {
+  IsEnum,
+  IsMongoId,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Types } from 'mongoose';
 
 class AddressDto {
-    @IsString()
-    street!: string;
+  @IsString()
+  street!: string;
 
-    @IsString()
-    city!: string;
+  @IsString()
+  city!: string;
 
-    @IsString()
-    country!: string;
+  @IsString()
+  country!: string;
 
-    @IsString()
-    code!: string;
+  @IsString()
+  code!: string;
 
-    @IsString()
-    phoneNumber!: string;
+  @IsString()
+  phoneNumber!: string;
 }
 
-
 class CouponDetail {
-    @IsMongoId()
-    couponId!: Types.ObjectId;
+  @IsMongoId()
+  couponId!: Types.ObjectId;
 
-    @IsNumber()
-    discount!: number;
+  @IsNumber()
+  discount!: number;
 
-    @IsString()
-    code!: string;
+  @IsString()
+  code!: string;
 }
 
 export class CreateOrderDto {
-    @ValidateNested()
-    @Type(() => AddressDto)
-    address!: AddressDto;
+  @ValidateNested()
+  @Type(() => AddressDto)
+  address!: AddressDto;
 
-    @IsEnum(PaymentMethod)
-    @IsOptional()
-    paymentMethod?: PaymentMethod;
+  @IsEnum(PaymentMethod)
+  @IsOptional()
+  paymentMethod?: PaymentMethod;
 
-    @ValidateNested()
-    @Type(() => CouponDetail)
-    @IsOptional()
-    couponDetails?: CouponDetail;
+  @ValidateNested()
+  @Type(() => CouponDetail)
+  @IsOptional()
+  couponDetails?: CouponDetail;
 
-    // products?: {
-    //     productId: string;
-    //     quantity: number;
-    // }[];
+  // products?: {
+  //     productId: string;
+  //     quantity: number;
+  // }[];
 }

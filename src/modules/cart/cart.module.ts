@@ -10,10 +10,10 @@ import { UserMongoModule } from '@shared/modules';
   imports: [
     UserMongoModule,
     ProductModule,
-    MongooseModule.forFeature([{ name: Cart.name, schema: cartSchema }])
+    MongooseModule.forFeature([{ name: Cart.name, schema: cartSchema }]),
   ],
   controllers: [CartController],
   providers: [CartService, CartRepository],
-  exports: [CartService]
+  exports: [CartService],
 })
 export class CartModule {}

@@ -5,10 +5,13 @@ import { UpdateCouponDto } from './dto/update-coupon.dto';
 
 @Injectable()
 export class CouponService {
-  constructor (private readonly couponRepository:CouponRepository) {}
+  constructor(private readonly couponRepository: CouponRepository) {}
 
   async create(coupon: Coupon) {
-    const couponExist = await this.couponRepository.getOne({ code: coupon.code, active: true });
+    const couponExist = await this.couponRepository.getOne({
+      code: coupon.code,
+      active: true,
+    });
     if (couponExist) throw new ConflictException('Coupon code already exists');
     return await this.couponRepository.create(coupon);
   }

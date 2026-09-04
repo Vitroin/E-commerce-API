@@ -18,7 +18,10 @@ export class OrderService {
     private readonly orderRepository: OrderRepository,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto, user: any): Promise<CreateOrderResult> {
+  async create(
+    createOrderDto: CreateOrderDto,
+    user: any,
+  ): Promise<CreateOrderResult> {
     const cart = await this.cartService.findOne(user);
 
     if ((cart.products ?? []).length === 0) {
@@ -35,20 +38,29 @@ export class OrderService {
     }[] = [];
 
     for (const product of cart.products ?? []) {
-      const productExist = await this.productRepository.getOne({ _id: product.productId });
+      const productExist = await this.productRepository.getOne({
+        _id: product.productId,
+      });
 
       if (!productExist) {
-        failProducts.push({ productId: product.productId, reason: 'Product not found' });
+        failProducts.push({
+          productId: product.productId,
+          reason: 'Product not found',
+        });
         continue;
       }
 
       if (productExist.stock < product.quantity) {
-        failProducts.push({ productId: product.productId, reason: 'Insufficient stock' });
+        failProducts.push({
+          productId: product.productId,
+          reason: 'Insufficient stock',
+        });
         continue;
       }
 
       const discount = productExist.discountAmount || 0;
-      const totalAmount = productExist.finalPrice * product.quantity * (1 - discount / 100);
+      const totalAmount =
+        productExist.finalPrice * product.quantity * (1 - discount / 100);
 
       successProducts.push({
         productId: product.productId,
@@ -63,7 +75,10 @@ export class OrderService {
       return { success: false, failedProducts: failProducts };
     }
 
-    const productsSubtotal = successProducts.reduce((acc, cur) => acc + cur.totalAmount, 0);
+    const productsSubtotal = successProducts.reduce(
+      (acc, cur) => acc + cur.totalAmount,
+      0,
+    );
 
     // Apply the order-level coupon discount, if one was provided
     const couponDiscount = createOrderDto.couponDetails?.discount ?? 0;
